@@ -1,0 +1,22 @@
+{
+  "name": "indieauth",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-react-views": "^0.11.0",
+    "morgan": "~1.9.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {}
+}
