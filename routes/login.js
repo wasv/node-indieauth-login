@@ -4,11 +4,6 @@ import path from 'path';
 
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('login', { redirect_to: req.query.redirect_to });
-});
-
 router.post('/', (req, res, next) => {
   console.log(req.path,req.body);
   const auth_url = new URL(

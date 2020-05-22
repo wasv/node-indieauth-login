@@ -1,0 +1,31 @@
+.login-field {
+  transition-duration: 0.4s;
+  margin: 2px;
+  border: none;
+  border-bottom: 3px solid darkgray;
+}
+
+.login-field:focus {
+  border-bottom: 3px solid darkblue;
+}
+
+.login-button {
+  transition-duration: 0.4s;
+  display: inline-block;
+  padding: 8px 16px;
+
+  border: 2pt solid darkblue;
+  background-color: white;
+  color: darkblue;
+}
+
+.login-button[disabled] {
+  border: 2pt solid transparent;
+  background-color: lightgray;
+  color: black;
+}
+
+.login-button:not([disabled]):hover {
+  background-color: darkblue;
+  color: white;
+}

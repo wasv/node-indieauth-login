@@ -18,12 +18,9 @@ app.engine('jsx', reactViews.createEngine({beautify: true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(path.resolve(), 'public')));
+app.use(express.static(path.join(path.resolve(), 'dist')));
 
-app.get('/', (req,res,next) => {
-  res.send('Index')
-});
-app.use('/login', loginRouter);
-app.use('/user', userRouter);
+app.use('/api/login', loginRouter);
+app.use('/api/user', userRouter);
 
 export default app;
