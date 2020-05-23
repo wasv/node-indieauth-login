@@ -19,7 +19,7 @@ export default (props) => {
 
 
   return (
-      <form action="/api/login" method="post" onSubmit={(e) => validate(e)}>
+      <form method="post" onSubmit={(e) => validate(e)}>
          <input type="hidden" name="redirect_to" value={props.redirect_to} />
          <div>
              <label htmlFor="uid">Domain: </label>

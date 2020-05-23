@@ -4,11 +4,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const outputDirectory = 'dist';
 
-module.exports = {
-  entry: ['./client/index.jsx'],
+const config = (pagename) => ({
+  entry: './client/'+pagename+'.jsx',
   output: {
     path: path.join(path.resolve(), outputDirectory),
-    filename: 'bundle.js'
+    filename: pagename+'.bundle.js'
   },
   module: {
     rules: [{
@@ -31,18 +31,13 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
-  devServer: {
-    port: 3000,
-    open: true,
-    historyApiFallback: true,
-    proxy: {
-      '/api': 'http://localhost:8080'
-    }
-  },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      filename: pagename+'.html'
     })
   ]
-};
+});
+
+module.exports = [config("index"), config("login")]
