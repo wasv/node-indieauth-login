@@ -48,6 +48,7 @@ router.post("/", async (req, res) => {
     req.session.state = crypto.randomBytes(8).toString("hex");
     req.session.redirect_to = req.body.redirect_to || "/";
     req.session.auth_url = auth_url.toString();
+    req.session.temp_uid = req.body.uid;
 
     auth_url.searchParams.append("state", req.session.state);
     auth_url.searchParams.append("redirect_uri", cb_url);
@@ -56,7 +57,7 @@ router.post("/", async (req, res) => {
 
     res.redirect(auth_url);
   } else {
-    res.redirect(host);
+    res.status(400).send("Unable to find authorization endpoint.")
   }
 });
 
@@ -76,10 +77,14 @@ router.get("/callback", async (req, res) => {
   delete req.session.state;
   delete req.session.auth_url;
 
-  req.session.uid = user_id;
-
-  res.redirect(req.session.redirect_to);
-  delete req.session.redirect_to;
+  if(new URL(req.session.temp_uid).domain === new URL(user_id).domain) {
+    delete req.session.temp_uid;
+    req.session.uid = user_id;
+    res.redirect(req.session.redirect_to);
+    delete req.session.redirect_to;
+  } else {
+    res.status(400).send("Unable to verify User ID.")
+  }
 });
 
 export default router;
