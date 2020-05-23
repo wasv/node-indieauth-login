@@ -21,7 +21,6 @@ webpack(webpackConfig, (err,stats) => {
   console.log("Webpack Completed")
 });
 
-var server = debug('indieauth:server')
 /**
  * Get port from environment and store in Express.
  */

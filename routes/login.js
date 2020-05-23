@@ -14,7 +14,7 @@ const get_auth_url = async (url) => (
   await axios.get(url).then((result) => {
     const page = cheerio.load(result.data);
     return new URL(page('link').attr('rel','authorization_url').attr('href'));
-  }).catch((e) => false)
+  }).catch(() => false)
 );
 
 const check_user_id = async (url, data) => (
