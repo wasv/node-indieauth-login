@@ -6,17 +6,14 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import reactViews from "express-react-views";
-import filestore from "session-file-store";
-var FileStore = filestore(session);
+import memorystore from "memorystore";
+var MemoryStore = memorystore(session);
 
 import loginRouter from "./routes/login.js";
 import userRouter from "./routes/users.js";
 
 dotenv.config();
 
-if (!fs.existsSync(process.env.SESSION_DIR)) {
-  fs.mkdirSync(process.env.SESSION_DIR);
-}
 var app = express();
 
 app.use(logger("dev"));
@@ -30,7 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
   session({
-    store: new FileStore({ path: process.env.SESSION_DIR }),
+    store: new MemoryStore({ checkPeriod: 43200000 }),
     secret: process.env.SECRET_KEY,
     resave: true,
     saveUninitialized: false,
