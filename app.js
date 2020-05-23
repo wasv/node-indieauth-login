@@ -1,11 +1,9 @@
-import fs from "fs";
 import express from "express";
 import dotenv from "dotenv";
 import session from "express-session";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import reactViews from "express-react-views";
 import memorystore from "memorystore";
 var MemoryStore = memorystore(session);
 
