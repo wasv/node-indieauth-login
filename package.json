@@ -8,6 +8,48 @@
     "dev": "nodemon -e js,jsx ./bin/www",
     "start": "NODE_ENV=production node ./bin/www"
   },
+  "babel": {
+    "presets":
+      ["@babel/preset-env",
+         ["@babel/preset-react",
+            {"runtime": "classic"}
+         ]
+      ]
+  },
+  "nodemonConfig": {
+    "ignore": ["dist/"]
+  },
+  "eslintConfig": {
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "ignorePatterns": ["dist/"]
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
