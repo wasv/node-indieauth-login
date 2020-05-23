@@ -26,6 +26,7 @@ app.use(
     store: new MemoryStore({ checkPeriod: 43200000 }),
     secret: process.env.SECRET_KEY,
     resave: true,
+    name: "iauth",
     saveUninitialized: false,
     cookie: { httpOnly: true },
   })
