@@ -8,6 +8,7 @@ const config = (pagename) => ({
   entry: './client/'+pagename+'.jsx',
   output: {
     path: path.join(path.resolve(), outputDirectory),
+    publicPath: '/static/',
     filename: pagename+'.bundle.js'
   },
   module: {

@@ -30,8 +30,11 @@ app.use(
     cookie: { httpOnly: true },
   })
 );
-app.use(express.static(path.join(path.resolve(), "dist")));
+app.use("/static", express.static(path.join(path.resolve(), "dist")));
 
+app.get("/", (req, res) => {
+  res.sendFile(path.join(path.resolve(), "dist/index.html"));
+});
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
 
