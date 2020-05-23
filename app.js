@@ -16,7 +16,7 @@ var app = express();
 
 app.use(logger("dev"));
 
-app.set('trust proxy', 'loopback')
+app.set("trust proxy", "loopback");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
