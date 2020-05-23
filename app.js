@@ -21,6 +21,7 @@ app.use(logger("dev"));
 app.set("views", path.resolve() + "/views");
 app.set("view engine", "jsx");
 app.engine("jsx", reactViews.createEngine({ beautify: true }));
+app.set('trust proxy', 'loopback')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
