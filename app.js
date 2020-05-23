@@ -34,10 +34,7 @@ app.use(
 );
 app.use(express.static(path.join(path.resolve(), "dist")));
 
-app.get("/", async (req, res) => {
-  res.sendFile(path.join(path.resolve(), "dist/login.html"));
-});
 app.use("/login", loginRouter);
-app.use("/api/user", userRouter);
+app.use("/user", userRouter);
 
 export default app;

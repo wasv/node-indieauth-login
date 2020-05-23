@@ -76,18 +76,10 @@ router.get("/callback", async (req, res) => {
   delete req.session.state;
   delete req.session.auth_url;
 
-  req.session.user_id = user_id;
+  req.session.uid = user_id;
 
   res.redirect(req.session.redirect_to);
   delete req.session.redirect_to;
-});
-
-router.get("/validate", async (req, res) => {
-  if (req.session.user_id) {
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(401);
-  }
 });
 
 export default router;

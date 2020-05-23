@@ -1,7 +1,9 @@
+import qs from "qs";
+
 export const checkAuth = (req, res, next) => {
-  if (req.session.user_id) {
+  if (req.session.uid) {
     next();
   } else {
-    res.redirect("/login?redirect_to=" + req.baseUrl);
+    res.redirect("/login?"+qs.stringify({redirect_to: req.originalUrl}));
   }
 };
