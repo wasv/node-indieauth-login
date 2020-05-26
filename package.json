@@ -1,6 +1,6 @@
 {
-  "name": "indieauth",
-  "version": "0.0.0",
+  "name": "indieauth-login",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
