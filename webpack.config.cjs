@@ -1,45 +1,46 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-const outputDirectory = 'dist';
+const outputDirectory = "dist";
 
 const config = (pagename) => ({
   mode: "production",
-  entry: './client/'+pagename+'.jsx',
+  entry: "./client/" + pagename + ".jsx",
   output: {
     path: path.join(path.resolve(), outputDirectory),
-    publicPath: '/static/',
-    filename: pagename+'.bundle.js'
+    publicPath: "/static/",
+    filename: pagename + ".bundle.js",
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader?limit=100000'
-      }
-    ]
+        loader: "url-loader?limit=100000",
+      },
+    ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ["*", ".js", ".jsx"],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
-      filename: pagename+'.html'
-    })
-  ]
+      template: "./public/index.html",
+      filename: pagename + ".html",
+    }),
+  ],
 });
 
-module.exports = [config("success"), config("login")]
+module.exports = [config("success"), config("login")];
