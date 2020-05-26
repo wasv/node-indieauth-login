@@ -41,12 +41,13 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const host = req.protocol + "://" + req.get("host");
   const cb_url = new URL(path.join(".", req.baseUrl, "callback"), host);
+  const success_url = new URL(path.join(".", req.baseUrl, "success"), host);
 
   const auth_url = await get_auth_url(req.body.uid);
 
   if (auth_url) {
     req.session.state = crypto.randomBytes(8).toString("hex");
-    req.session.redirect_to = req.body.redirect_to || "/";
+    req.session.redirect_to = req.body.redirect_to || success_url.toString();
     req.session.auth_url = auth_url.toString();
     req.session.temp_uid = req.body.uid;
 
@@ -85,6 +86,10 @@ router.get("/callback", async (req, res) => {
   } else {
     res.status(400).send("Unable to verify User ID.")
   }
+});
+
+router.get("/success", async (req, res) => {
+  res.sendFile(path.join(path.resolve(), "dist/success.html"));
 });
 
 export default router;

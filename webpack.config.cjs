@@ -42,4 +42,4 @@ const config = (pagename) => ({
   ]
 });
 
-module.exports = [config("index"), config("login")]
+module.exports = [config("success"), config("login")]
