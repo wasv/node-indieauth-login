@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
 
   if (auth_url) {
     req.session.state = crypto.randomBytes(8).toString("hex");
-    req.session.redirect_to = req.body.redirect_to || success_url.toString();
+    req.session.redirect_to = req.body.rd || success_url.toString();
     req.session.auth_url = auth_url.toString();
     req.session.temp_uid = req.body.uid;
 

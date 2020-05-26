@@ -20,7 +20,7 @@ export default (props) => {
 
   return (
       <form method="post" onSubmit={(e) => validate(e)}>
-         <input type="hidden" name="redirect_to" value={props.redirect_to} />
+         <input type="hidden" name="rd" value={props.rd} />
          <div>
              <label htmlFor="uid">Domain: </label>
              <input onChange={ (e) => onChange(e.target.value) }

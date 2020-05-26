@@ -6,6 +6,6 @@ import './index.css';
 document.title = "IndieAuth Login"
 
 const urlParams = new URLSearchParams(window.location.search);
-const redirect_to = urlParams.get('redirect_to');
+const rd = urlParams.get('rd');
 
-ReactDOM.render(<LoginForm redirect_to={redirect_to} />, document.getElementById('root'));
+ReactDOM.render(<LoginForm rd={rd} />, document.getElementById('root'));
