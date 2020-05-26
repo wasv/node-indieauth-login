@@ -1,3 +1,4 @@
+import crypto from "crypto"
 import express from "express";
 import dotenv from "dotenv";
 import session from "express-session";
@@ -24,7 +25,7 @@ app.use(cookieParser());
 app.use(
   session({
     store: new MemoryStore({ checkPeriod: 43200000 }),
-    secret: process.env.SECRET_KEY,
+    secret: process.env.SECRET_KEY || crypto.randomBytes(16).toString("hex"),
     resave: true,
     name: "iauth",
     saveUninitialized: false,
