@@ -11,8 +11,6 @@ import webpack from "webpack";
 import webpackConfig from "../webpack.config.cjs";
 import process from "process";
 
-webpackConfig.mode = process.env.NODE_ENV;
-
 webpack(webpackConfig, (err, stats) => {
   if (err || stats.hasErrors()) {
     console.log(stats.toString({ colors: true }));

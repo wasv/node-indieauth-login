@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const outputDirectory = 'dist';
 
 const config = (pagename) => ({
+  mode: "production",
   entry: './client/'+pagename+'.jsx',
   output: {
     path: path.join(path.resolve(), outputDirectory),
