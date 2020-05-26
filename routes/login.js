@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
 
     res.redirect(auth_url);
   } else {
-    res.status(400).send("Unable to find authorization endpoint.")
+    res.status(400).send("Unable to find authorization endpoint.");
   }
 });
 
@@ -78,13 +78,13 @@ router.get("/callback", async (req, res) => {
   delete req.session.state;
   delete req.session.auth_url;
 
-  if(new URL(req.session.temp_uid).domain === new URL(user_id).domain) {
+  if (new URL(req.session.temp_uid).domain === new URL(user_id).domain) {
     delete req.session.temp_uid;
     req.session.uid = user_id;
     res.redirect(req.session.redirect_to);
     delete req.session.redirect_to;
   } else {
-    res.status(400).send("Unable to verify User ID.")
+    res.status(400).send("Unable to verify User ID.");
   }
 });
 
