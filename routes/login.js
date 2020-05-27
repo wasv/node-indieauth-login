@@ -15,9 +15,7 @@ const get_auth_url = async (url) =>
     .get(url)
     .then((result) => {
       const page = cheerio.load(result.data);
-      return new URL(
-        page("link").attr("rel", "authorization_url").attr("href")
-      );
+      return new URL(page("link[rel=authorization_endpoint]").attr("href"));
     })
     .catch(() => false);
 
