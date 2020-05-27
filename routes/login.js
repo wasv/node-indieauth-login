@@ -76,7 +76,10 @@ router.get("/callback", async (req, res) => {
   delete req.session.state;
   delete req.session.auth_url;
 
-  if (new URL(req.session.temp_uid).domain === new URL(user_id).domain) {
+  if (
+    user_id &&
+    new URL(req.session.temp_uid).hostname === new URL(user_id).hostname
+  ) {
     delete req.session.temp_uid;
     req.session.uid = user_id;
     res.redirect(req.session.redirect_to);
