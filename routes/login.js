@@ -90,7 +90,11 @@ router.get("/callback", async (req, res) => {
 });
 
 router.get("/success", async (req, res) => {
-  res.sendFile(path.join(path.resolve(), "dist/success.html"));
+  if (req.session.uid) {
+    res.status(200).send("Logged in successfully!");
+  } else {
+    res.status(401).send("Not logged in.");
+  }
 });
 
 export default router;
