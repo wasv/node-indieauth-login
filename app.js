@@ -29,7 +29,11 @@ app.use(
     resave: true,
     name: "iauth",
     saveUninitialized: false,
-    cookie: { httpOnly: true, domain: process.env.COOKIE_DOMAIN },
+    cookie: {
+      httpOnly: true,
+      maxAge: 21600000,
+      domain: process.env.COOKIE_DOMAIN,
+    },
   })
 );
 app.use("/static", express.static(path.join(path.resolve(), "dist")));
