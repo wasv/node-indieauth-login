@@ -43,21 +43,21 @@ router.post("/", async (req, res) => {
 
   const auth_url = await get_auth_url(req.body.uid);
 
-  if (auth_url) {
-    req.session.state = crypto.randomBytes(8).toString("hex");
-    req.session.redirect_to = req.body.rd || success_url.toString();
-    req.session.auth_url = auth_url.toString();
-    req.session.temp_uid = req.body.uid;
-
-    auth_url.searchParams.append("state", req.session.state);
-    auth_url.searchParams.append("redirect_uri", cb_url);
-    auth_url.searchParams.append("client_id", process.env.CLIENT_ID);
-    auth_url.searchParams.append("me", req.body.uid);
-
-    res.redirect(auth_url);
-  } else {
+  if (!auth_url) {
     res.status(400).send("Unable to find authorization endpoint.");
+    return;
   }
+  req.session.state = crypto.randomBytes(8).toString("hex");
+  req.session.redirect_to = req.body.rd || success_url.toString();
+  req.session.auth_url = auth_url.toString();
+  req.session.temp_uid = req.body.uid;
+
+  auth_url.searchParams.append("state", req.session.state);
+  auth_url.searchParams.append("redirect_uri", cb_url);
+  auth_url.searchParams.append("client_id", process.env.CLIENT_ID);
+  auth_url.searchParams.append("me", req.body.uid);
+
+  res.redirect(auth_url);
 });
 
 router.get("/callback", async (req, res) => {
@@ -67,34 +67,43 @@ router.get("/callback", async (req, res) => {
     host
   ).toString();
 
+  if (!req.session.auth_url) {
+    res.sendStatus(400);
+    return;
+  }
+
   const user_id = await check_user_id(req.session.auth_url, {
     code: req.query.code,
     redirect_uri: cb_url,
     client_id: process.env.CLIENT_ID,
   });
 
-  delete req.session.state;
   delete req.session.auth_url;
 
   if (
-    user_id &&
-    new URL(req.session.temp_uid).hostname === new URL(user_id).hostname
+    !user_id ||
+    new URL(req.session.temp_uid).hostname != new URL(user_id).hostname
   ) {
-    delete req.session.temp_uid;
-    req.session.uid = user_id;
-    res.redirect(req.session.redirect_to);
-    delete req.session.redirect_to;
-  } else {
     res.status(400).send("Unable to verify User ID.");
+    return;
   }
+  if (req.session.state != req.query.state) {
+    res.status(400).send("State parameters do not match.");
+    return;
+  }
+  delete req.session.state;
+  delete req.session.temp_uid;
+  req.session.uid = user_id;
+  res.redirect(req.session.redirect_to);
+  delete req.session.redirect_to;
 });
 
 router.get("/success", async (req, res) => {
-  if (req.session.uid) {
-    res.status(200).send("Logged in successfully!");
-  } else {
+  if (!req.session.uid) {
     res.status(401).send("Not logged in.");
+    return;
   }
+  res.status(200).send("Logged in successfully!");
 });
 
 export default router;
