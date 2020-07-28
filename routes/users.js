@@ -14,7 +14,7 @@ router.get("/logout", checkAuth, (req, res) => {
 
 router.get("/validate", async (req, res) => {
   if (req.session.uid) {
-    res.set('User', req.session.uid);
+    res.set("User", req.session.uid);
     if (req.query.uid) {
       if (req.session.uid == req.query.uid) {
         res.sendStatus(200);
